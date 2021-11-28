@@ -5,6 +5,7 @@ import {getRepos} from "../actions/repos"
 import Repo from './repo/Repo.jsx'
 import { createPages } from '../../utils/pagesCreator.js'
 import { setCurrentPage } from '../../reducers/reposReducers.js'
+import { Redirect } from 'react-router-dom'
 
 function Main() {
     const dispatch = useDispatch()
@@ -13,6 +14,8 @@ function Main() {
     const currentPage = useSelector(state => state.repos.currentPage)
     const totalCount = useSelector(state => state.repos.totalCount)
     const perPage = useSelector(state => state.repos.perPage)
+    const isFetchError = useSelector(state => state.repos.isFetchError)
+
 
     const pagesCount = Math.ceil(totalCount / perPage)
     const pages = []
@@ -30,8 +33,16 @@ function Main() {
         dispatch(getRepos(searchValue, currentPage, perPage))
     }
 
+
+
     return (
         <div>
+            {
+                isFetchError &&
+                <div className="alert alert-danger" role="alert">
+                    Something went wrong.
+                </div>
+            }
             <div className="search">
                 <input value={searchValue} onChange={(e) => setSearchValue(e.target.value)} type="text" placeholder="input repo name" className="search-input" />
                 <button onClick={() => searchHandler()} className="search-btn">Search</button>

@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 import Main from './main/Main.jsx';
 import Card from './card/Card.jsx';
+import Error from './main/repo/Error.jsx';
 
 function App() {
     const dispatch = useDispatch()
@@ -15,6 +16,7 @@ function App() {
             <Switch>
                  <Route exact path="/" component={Main}/>
                  <Route path="/card/:username/:reponame" component={Card}/>
+                 <Route path="/error" component={Error}/>
                  <Redirect to="/"/>
             </Switch>
         </div>
